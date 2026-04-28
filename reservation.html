@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Reservation | NOA Homes</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Outfit:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#C5A059',
+                        dark: '#111111',
+                        light: '#FAFAFA',
+                        surface: '#1A1A1A'
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    letterSpacing: {
+                        widest: '.25em',
+                        ultra: '.4em'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #FAFAFA; color: #111111; }
+        .dark-section { background-color: #111111; color: #FAFAFA; }
+        
+        .nav-scrolled { background-color: rgba(250, 250, 250, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .hover-underline { position: relative; }
+        .hover-underline::after {
+            content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0;
+            background-color: #C5A059; transition: width 0.4s ease;
+        }
+        .hover-underline:hover::after { width: 100%; }
+
+        .btn-outline {
+            border: 1px solid rgba(17, 17, 17, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-outline::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%;
+            background-color: #C5A059; transition: width 0.4s ease; z-index: -1;
+        }
+        .btn-outline:hover::before { width: 100%; }
+        .btn-outline:hover { color: #FAFAFA; border-color: #C5A059; }
+
+        .btn-solid {
+            background-color: #C5A059; color: #FAFAFA; border: 1px solid #C5A059;
+            transition: all 0.4s ease;
+        }
+        .btn-solid:hover { background-color: transparent; color: #C5A059; }
+
+        .input-line {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding: 1rem 0;
+            outline: none;
+            transition: border-color 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 300;
+            color: #FAFAFA;
+        }
+        .input-line:focus { border-color: #C5A059; }
+        .input-line::placeholder { color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px; }
+        
+        select.input-line {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23FAFAFA' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: 1em;
+        }
+        select.input-line option { color: #111111; }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden selection:bg-gold selection:text-white dark-section">
+
+    <header class="fixed w-full z-50 transition-all duration-500 py-4 px-8 text-white nav-scrolled" style="background-color: rgba(17,17,17,0.95); border-bottom-color: rgba(255,255,255,0.05);" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-serif text-2xl tracking-ultra">NOA <span class="text-gold">HOMES</span></a>
+            <nav class="hidden md:flex gap-10 text-[11px] uppercase tracking-widest font-light">
+                <a href="index.html" class="hover-underline">Home</a>
+                <a href="property.html" class="hover-underline">Properties</a>
+                <a href="about.html" class="hover-underline">Our Story</a>
+                <a href="diaspora.html" class="hover-underline">Diaspora</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <a href="contact.html" class="hidden md:block btn-outline px-8 py-3 text-[10px] uppercase tracking-widest font-medium border-white/20 text-white hover:text-white">Contact Us</a>
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-dark z-[60] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
+            <button id="close-menu-btn" class="absolute top-8 right-8 text-white">
+                <i data-lucide="x" class="w-8 h-8 text-gold"></i>
+            </button>
+            <a href="index.html" class="font-serif text-3xl text-gold mb-10 tracking-ultra">NOA HOMES</a>
+            <nav class="flex flex-col items-center gap-8 text-sm uppercase tracking-widest font-light text-white">
+                <a href="index.html">Home</a>
+                <a href="property.html">Properties</a>
+                <a href="about.html">Our Story</a>
+                <a href="diaspora.html">Diaspora</a>
+                <a href="contact.html" class="mt-4 btn-solid px-10 py-4 text-[10px]">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="min-h-screen flex items-center pt-32 pb-20 px-6">
+        <div class="max-w-5xl mx-auto w-full grid md:grid-cols-[1fr_2fr] gap-16">
+            
+            <div class="reveal">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-8 h-[1px] bg-gold"></div>
+                    <h2 class="text-gold uppercase tracking-widest text-[10px] font-medium">Acquisition</h2>
+                </div>
+                <h1 class="font-serif text-4xl text-white mb-6 leading-tight">Secure Your <br>Residence</h1>
+                <p class="text-white/60 text-sm font-light tracking-wide leading-relaxed mb-10">
+                    Reserving a unit requires a fully refundable $5,000 USD deposit. Please complete the form below to initiate the documentation process with our legal team.
+                </p>
+                
+                <div class="border border-white/10 p-8 text-center bg-surface">
+                    <i data-lucide="shield-check" class="w-8 h-8 text-gold mx-auto mb-4"></i>
+                    <p class="text-[10px] uppercase tracking-widest text-white/50 mb-2">Secure Escrow</p>
+                    <p class="text-xs font-light text-white/80">All reservation deposits are held in a secure, audited escrow account until final contracts are signed.</p>
+                </div>
+            </div>
+
+            <div class="bg-surface border border-white/10 p-10 md:p-12 reveal" style="transition-delay: 100ms;">
+                <form class="space-y-10">
+                    <h3 class="font-serif text-2xl text-white mb-8 pb-4 border-b border-white/10">Investor Details</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-10">
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-widest text-white/40 mb-1">Legal Full Name</label>
+                            <input type="text" placeholder="As it appears on passport" class="input-line w-full">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-widest text-white/40 mb-1">Nationality</label>
+                            <input type="text" placeholder="e.g. British, American" class="input-line w-full">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-10">
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-widest text-white/40 mb-1">Email Address</label>
+                            <input type="email" placeholder="Required for legal docs" class="input-line w-full">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-widest text-white/40 mb-1">Phone Number</label>
+                            <input type="tel" placeholder="+1 (555) 000-0000" class="input-line w-full">
+                        </div>
+                    </div>
+
+                    <h3 class="font-serif text-2xl text-white mb-8 pt-8 pb-4 border-b border-white/10">Property Selection</h3>
+
+                    <div class="grid md:grid-cols-2 gap-10">
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-widest text-white/40 mb-1">Select Development</label>
+                            <select class="input-line w-full text-[10px] uppercase tracking-widest text-white/60">
+                                <option value="">Choose Property</option>
+                                <option>The NOA Enclave (30 Unit Dev.)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[9px] uppercase tracking-widest text-white/40 mb-1">Preferred Unit Type</label>
+                            <select class="input-line w-full text-[10px] uppercase tracking-widest text-white/60">
+                                <option value="">Choose Unit Type</option>
+                                <option>Plot & Structure Base ($60,000)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="pt-8">
+                        <label class="flex items-start gap-4 cursor-pointer group">
+                            <input type="checkbox" class="mt-1 w-4 h-4 accent-gold">
+                            <span class="text-[10px] uppercase tracking-widest text-white/50 leading-relaxed font-light group-hover:text-white/80 transition">
+                                I confirm that the information provided is accurate and I consent to Elite Ghana's legal team preparing the initial reservation agreement.
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="button" onclick="sendToWhatsApp()" class="btn-solid w-full py-5 text-xs uppercase tracking-widest font-medium">Reserve Now</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-black text-center border-t border-white/5 mt-auto">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="font-serif text-2xl tracking-ultra text-white mb-8">NOA <span class="text-gold">HOMES</span></h2>
+            <div class="flex justify-center gap-8 mb-12 text-[10px] uppercase tracking-widest text-white/50">
+                <a href="about.html" class="hover:text-gold transition">About Us</a>
+                <a href="contact.html" class="hover:text-gold transition">Contact</a>
+                <a href="diaspora.html" class="hover:text-gold transition">Diaspora</a>
+            </div>
+            <p class="text-white/30 text-[10px] tracking-widest">&copy; 2026 NOA Homes Luxury Estates. Masterfully Crafted.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+        });
+
+        // Close menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+            });
+        });
+
+        function sendToWhatsApp() {
+            const fullName = document.querySelector('input[placeholder="As it appears on passport"]').value;
+            const nationality = document.querySelector('input[placeholder="e.g. British, American"]').value;
+            const email = document.querySelector('input[placeholder="Required for legal docs"]').value;
+            const phone = document.querySelector('input[placeholder="+1 (555) 000-0000"]').value;
+            const property = document.querySelector('select').value;
+            const type = document.querySelectorAll('select')[1].value;
+
+            const text = `Hello NOA Homes, I would like to reserve a unit:%0A%0AName: ${fullName}%0ANationality: ${nationality}%0AEmail: ${email}%0APhone: ${phone}%0AProperty: ${property}%0AUnit Type: ${type}`;
+            window.open(`https://wa.me/233262165717?text=${text}`, '_blank');
+        }
+    </script>
+</body>
+</html>

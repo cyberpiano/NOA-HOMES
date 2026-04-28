@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | NOA Homes</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Outfit:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#C5A059',
+                        dark: '#111111',
+                        light: '#FAFAFA',
+                        surface: '#1A1A1A'
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    letterSpacing: {
+                        widest: '.25em',
+                        ultra: '.4em'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #FAFAFA; color: #111111; }
+        .dark-section { background-color: #111111; color: #FAFAFA; }
+        
+        .nav-scrolled { background-color: rgba(250, 250, 250, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .hover-underline { position: relative; }
+        .hover-underline::after {
+            content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0;
+            background-color: #C5A059; transition: width 0.4s ease;
+        }
+        .hover-underline:hover::after { width: 100%; }
+
+        .btn-outline {
+            border: 1px solid rgba(17, 17, 17, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-outline::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%;
+            background-color: #C5A059; transition: width 0.4s ease; z-index: -1;
+        }
+        .btn-outline:hover::before { width: 100%; }
+        .btn-outline:hover { color: #FAFAFA; border-color: #C5A059; }
+
+        .team-card { transition: all 0.5s ease; border: 1px solid rgba(0,0,0,0.05); }
+        .team-card:hover { border-color: #C5A059; }
+        .team-img-wrapper { overflow: hidden; }
+        .team-img { transition: transform 1.5s ease, filter 0.5s ease; filter: grayscale(100%); }
+        .team-card:hover .team-img { transform: scale(1.05); filter: grayscale(0%); }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden selection:bg-gold selection:text-white">
+
+    <header class="fixed w-full z-50 transition-all duration-500 py-4 px-8 text-dark nav-scrolled" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="font-serif text-2xl tracking-ultra">NOA <span class="text-gold">HOMES</span></a>
+            <nav class="hidden md:flex gap-10 text-[11px] uppercase tracking-widest font-light">
+                <a href="index.html" class="hover-underline">Home</a>
+                <a href="property.html" class="hover-underline">Properties</a>
+                <a href="about.html" class="hover-underline text-gold">Our Story</a>
+                <a href="diaspora.html" class="hover-underline">Diaspora</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <a href="contact.html" class="hidden md:block btn-outline px-8 py-3 text-[10px] uppercase tracking-widest font-medium">Contact Us</a>
+                <button id="mobile-menu-btn" class="md:hidden text-dark focus:outline-none">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
+            <button id="close-menu-btn" class="absolute top-8 right-8 text-dark">
+                <i data-lucide="x" class="w-8 h-8 text-gold"></i>
+            </button>
+            <a href="index.html" class="font-serif text-3xl text-gold mb-10 tracking-ultra">NOA HOMES</a>
+            <nav class="flex flex-col items-center gap-8 text-sm uppercase tracking-widest font-light text-dark">
+                <a href="index.html">Home</a>
+                <a href="property.html">Properties</a>
+                <a href="about.html" class="text-gold">Our Story</a>
+                <a href="diaspora.html">Diaspora</a>
+                <a href="contact.html" class="mt-4 btn-solid px-10 py-4 text-[10px]">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="pt-40 pb-20 px-6 max-w-5xl mx-auto text-center reveal">
+        <h1 class="font-serif text-4xl md:text-6xl text-dark mb-6 leading-tight tracking-wide">
+            Our Legacy <br>
+            <span class="text-gold italic font-light tracking-normal text-3xl md:text-5xl">Defining Luxury Real Estate</span>
+        </h1>
+        <p class="text-dark/60 text-sm md:text-base font-light max-w-2xl mx-auto tracking-wide leading-relaxed">
+            Founded on the principles of trust, architectural excellence, and seamless service. Elite Ghana has become the premier choice for global citizens investing in their homeland.
+        </p>
+    </section>
+
+    <!-- Full Width Image -->
+    <section class="w-full h-[60vh] reveal">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80" alt="Office Interior" class="w-full h-full object-cover grayscale-[30%]">
+    </section>
+
+    <!-- The Vision -->
+    <section class="py-32 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+        <div class="reveal">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-[1px] bg-gold"></div>
+                <h2 class="text-gold uppercase tracking-widest text-[10px] font-medium">The Vision</h2>
+            </div>
+            <h3 class="font-serif text-3xl md:text-4xl text-dark mb-8 leading-snug">Bridging the Gap Between You and Home.</h3>
+            <div class="space-y-6 text-dark/60 font-light text-sm tracking-wide leading-relaxed">
+                <p>We recognized a profound disconnect for diaspora investors—a journey often marred by uncertainty, complex legalities, and a lack of transparency. NOA Homes was born to eliminate these barriers.</p>
+                <p>By bringing international standards of real estate development to Accra’s most prestigious neighborhoods, we ensure that your investment is secure, your acquisition process is seamless, and your property is flawlessly finished.</p>
+                <p class="text-gold font-medium pt-4">We have successfully sold over 40+ units, and we are currently selling an exclusive 30+ units in our newest development.</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 gap-8 reveal" style="transition-delay: 200ms;">
+            <div class="border border-black/5 p-10 text-center hover:border-gold transition duration-500 bg-white">
+                <p class="text-gold font-serif text-4xl mb-2">40+</p>
+                <p class="text-[9px] uppercase tracking-widest text-dark/50">Units Sold</p>
+            </div>
+            <div class="border border-black/5 p-10 text-center hover:border-gold transition duration-500 bg-white mt-12">
+                <p class="text-gold font-serif text-4xl mb-2">30+</p>
+                <p class="text-[9px] uppercase tracking-widest text-dark/50">Currently Available</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership (Dark Section) -->
+    <section class="py-32 dark-section border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <div class="w-8 h-[1px] bg-gold"></div>
+                    <h2 class="text-gold uppercase tracking-widest text-[10px] font-medium">Executive Board</h2>
+                    <div class="w-8 h-[1px] bg-gold"></div>
+                </div>
+                <h3 class="font-serif text-4xl text-white">Masterminds of Elite</h3>
+            </div>
+
+            <div class="flex justify-center">
+                <div class="team-card bg-surface reveal w-full max-w-sm">
+                    <div class="team-img-wrapper h-[450px]">
+                        <img src="Pastor Richard.jpg" alt="Pastor Richard" class="team-img w-full h-full object-cover">
+                    </div>
+                    <div class="p-8 border-t border-white/5">
+                        <h4 class="text-xl font-serif text-white mb-1">Pastor Richard</h4>
+                        <p class="text-[10px] uppercase tracking-widest text-gold mb-4">Founder</p>
+                        <p class="text-white/50 text-xs font-light leading-relaxed">Pioneering international property law standards within the Ghanaian real estate market to guarantee litigation-free investments.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-surface text-center border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="font-serif text-2xl tracking-ultra text-white mb-8">NOA <span class="text-gold">HOMES</span></h2>
+            <div class="flex justify-center gap-8 mb-12 text-[10px] uppercase tracking-widest text-white/50">
+                <a href="about.html" class="hover:text-gold transition">About Us</a>
+                <a href="contact.html" class="hover:text-gold transition">Contact</a>
+                <a href="diaspora.html" class="hover:text-gold transition">Diaspora</a>
+            </div>
+            <p class="text-white/30 text-[10px] tracking-widest">&copy; 2026 NOA Homes Luxury Estates. Masterfully Crafted.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+        });
+
+        // Close menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+            });
+        });
+    </script>
+</body>
+</html>
