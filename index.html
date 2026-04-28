@@ -130,7 +130,7 @@
 
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <video autoplay muted loop class="w-full h-full object-cover">
+            <video autoplay muted loop playsinline preload="auto" class="w-full h-full object-cover">
                 <source src="hero.mp4?v=2" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-black/60"></div>
@@ -365,6 +365,19 @@
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('translate-x-full');
             });
+        });
+
+        // Ensure video plays on mobile
+        window.addEventListener('load', () => {
+            const video = document.querySelector('video');
+            if (video) {
+                video.play().catch(error => {
+                    console.log("Autoplay was prevented, waiting for interaction");
+                    document.addEventListener('click', () => {
+                        video.play();
+                    }, { once: true });
+                });
+            }
         });
     </script>
 </body>
